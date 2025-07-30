@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<module-content version="12.8">
+    <module id="828d9058-998e-4412-b5f3-74c3860bcf01" name="RestADOSACxp">
+        <resource path="AppServer" publish="true"/>
+    </module>
+</module-content>
