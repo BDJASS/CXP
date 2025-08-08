@@ -5,6 +5,34 @@
       <lm:details>
         <lm:adapterDetails>
           <lm:properties>
+            <lm:properties name="_AutorizacionPagos::cxp0005a..TransfPendAut::GET">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;
+&lt;mapping:messageMapping xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:mapping=&quot;http://www.progress.com/caf/mapping1.0&quot; xmlns:metadata=&quot;http://www.progress.com/caf/mapping1.0/toolingMetadata&quot;>&#xD;
+  &lt;metadata:toolingMetadata xsi:type=&quot;metadata:toolingMetadata&quot;>&#xD;
+    &lt;metadata:mapInput>&#xD;
+      &lt;metadata:source>&#xD;
+        &lt;metadata:mappablesData displayName=&quot;IdUsuario&quot; expressionName=&quot;${rest.queryparam['IdUsuario']}&quot; mappableType=&quot;MANUAL&quot;/>&#xD;
+      &lt;/metadata:source>&#xD;
+      &lt;metadata:target/>&#xD;
+    &lt;/metadata:mapInput>&#xD;
+    &lt;metadata:mapOutput>&#xD;
+      &lt;metadata:source/>&#xD;
+      &lt;metadata:target>&#xD;
+        &lt;metadata:mappablesData displayName=&quot;IdError&quot; expressionName=&quot;${json.object['response'].boolean['IdError']}&quot; mappableType=&quot;MANUAL&quot;/>&#xD;
+        &lt;metadata:mappablesData displayName=&quot;Respuesta&quot; expressionName=&quot;${json.object['response'].string['Respuesta']}&quot; mappableType=&quot;MANUAL&quot;/>&#xD;
+        &lt;metadata:mappablesData displayName=&quot;dsAut&quot; expressionName=&quot;${json.object['response'].object['dsAut']}&quot; mappableType=&quot;MANUAL&quot;/>&#xD;
+      &lt;/metadata:target>&#xD;
+    &lt;/metadata:mapOutput>&#xD;
+  &lt;/metadata:toolingMetadata>&#xD;
+  &lt;mapping:mapInput>&#xD;
+    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;${rest.queryparam['IdUsuario']}&quot; target=&quot;${idl.param['IdUsuario']}&quot; type=&quot;INTERFACE_PARAM&quot;/>&#xD;
+  &lt;/mapping:mapInput>&#xD;
+  &lt;mapping:mapOutput>&#xD;
+    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;${idl.param['IdError']}&quot; target=&quot;${json.object['response'].boolean['IdError']}&quot; type=&quot;INTERFACE_PARAM&quot;/>&#xD;
+    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;${idl.param['Respuesta']}&quot; target=&quot;${json.object['response'].string['Respuesta']}&quot; type=&quot;INTERFACE_PARAM&quot;/>&#xD;
+    &lt;mapping:rule action=&quot;None&quot; resource=&quot;&quot; source=&quot;${idl.param['dsAut']}&quot; target=&quot;${json.object['response'].object['dsAut']}&quot; type=&quot;INTERFACE_PARAM&quot;/>&#xD;
+  &lt;/mapping:mapOutput>&#xD;
+  &lt;mapping:mapFault name=&quot;default_fault&quot;/>&#xD;
+&lt;/mapping:messageMapping></lm:properties>
             <lm:properties name="applicationRelativePath">/RestADOSACxp</lm:properties>
           </lm:properties>
         </lm:adapterDetails>
@@ -14,7 +42,11 @@
           </lm:properties>
         </lm:productDetails>
       </lm:details>
-      <lm:nodes id="/RestADOSACxp_groupingNode" name="RestADOSACxp"/>
+      <lm:nodes id="/RestADOSACxp_groupingNode" name="RestADOSACxp">
+        <lm:details>
+          <lm:adapterDetails/>
+        </lm:details>
+      </lm:nodes>
       <lm:propertyDetails/>
     </lm:services>
   </lm:serviceCollection>
