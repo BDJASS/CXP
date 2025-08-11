@@ -5,4 +5,30 @@
       <prgs:param name="IdUsuario" type="QUERY"/>
     </prgs:operation>
   </prgs:resource>
+  <prgs:resource consumes="application/json" name="_TiposCambio" path="/TiposCambio" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/tipocambio.pidl::com.progress.openedge.pdt.bpmbindings" name="tipocambio..GetTipoCambio" produces="application/json" verb="GET">
+      <prgs:param name="FechaIni" type="QUERY"/>
+      <prgs:param name="FechaFin" type="QUERY"/>
+    </prgs:operation>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/tipocambio.pidl::com.progress.openedge.pdt.bpmbindings" name="tipocambio..PostTipoCambio" produces="application/json" verb="POST">
+      <prgs:param name="Moneda" type="QUERY"/>
+      <prgs:param name="FecReg" type="QUERY"/>
+      <prgs:param name="Importe" type="QUERY"/>
+      <prgs:param name="User" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="_FoliosBuzonFiscal" path="/FoliosBuzonFiscal" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/foliobuzonfiscal.pidl::com.progress.openedge.pdt.bpmbindings" name="foliobuzonfiscal..GetBuzonFiscal" produces="application/json" verb="GET">
+      <prgs:param name="FechaIni" type="QUERY"/>
+      <prgs:param name="FechaFin" type="QUERY"/>
+    </prgs:operation>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/foliobuzonfiscal.pidl::com.progress.openedge.pdt.bpmbindings" name="foliobuzonfiscal..PostBuzonFiscal" produces="application/json" verb="POST">
+      <prgs:param name="UUID" type="QUERY"/>
+      <prgs:param name="Serie" type="QUERY"/>
+      <prgs:param name="Folio" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="_Proveedores" path="/Proveedores" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/proveedorescxp.pidl::com.progress.openedge.pdt.bpmbindings" name="proveedorescxp..GetProveedores" produces="application/json" verb="GET"/>
+  </prgs:resource>
 </prgs:model>

@@ -72,8 +72,25 @@ DEFINE TEMP-TABLE ttAut NO-UNDO
     FIELD Aut          LIKE Cheque.Negociable     
     FIELD B            AS CHARACTER 
     FIELD CtaCheque    LIKE Cheque.Id-CtaCheq
+    FIELD Tipo         LIKE Cheque.Tipo
     INDEX idxFolio IS UNIQUE PRIMARY Folio.
 
+/* Tabla detalle */
+DEFINE TEMP-TABLE ttDet NO-UNDO
+    FIELD Folio          LIKE Cheque.NumCheque
+    FIELD FormaPago      LIKE DetCheque.Refer 
+    FIELD EntradaC       LIKE EntFP.Id-EC    
+    FIELD Factura        LIKE DetCheque.NumFac       
+    FIELD Buzon          AS CHAR    
+    FIELD FechaVenc      AS DATE 
+    FIELD ImpOriginal    AS DECIMAL FORMAT "zzzzzz9"       
+    FIELD PP1            AS DECIMAL  FORMAT ">9.99"
+    FIELD PP2            AS DECIMAL  FORMAT ">9.99"
+    FIELD PP3            AS DECIMAL  FORMAT ">9.99"
+    FIELD PP4            AS DECIMAL  FORMAT ">9.99"
+    INDEX idxDetalle IS PRIMARY Folio Factura.
+    
+    
 /* Tabla detalle */
 DEFINE TEMP-TABLE ttAutDet NO-UNDO
     FIELD Folio          LIKE Cheque.NumCheque
@@ -101,13 +118,16 @@ DEFINE TEMP-TABLE ttEntCompra NO-UNDO
     FIELD Importe         AS DECIMAL FORMAT "zz,zz9.999999"  .  
 
 DEFINE DATASET dsAut
-    FOR ttAut, ttAutDet, ttEntCompra
-    DATA-RELATION drAut FOR ttAut, ttAutDet
+    FOR ttAut, ttDet,ttAutDet, ttEntCompra
+    DATA-RELATION drAut FOR ttAut, ttDet
     RELATION-FIELDS(Folio, Folio)
     NESTED
+    DATA-RELATION drAut2 FOR ttDet, ttAutDet
+    RELATION-FIELDS(Folio, Folio)
+    NESTED  
     DATA-RELATION drDetEnt FOR ttAutDet, ttEntCompra
     RELATION-FIELDS(EntradaC, EntradaC)
-    NESTED.
+    NESTED.  
 
 
 
@@ -118,7 +138,7 @@ DEF VAR l-rpImp3 AS DECIMAL NO-UNDO.
 DEF VAR l-rpImp4 AS DECIMAL NO-UNDO.
 DEF VAR l-rpImp5 AS DECIMAL NO-UNDO.
 DEF VAR l-rpImp6 AS DECIMAL NO-UNDO.
-DEF VAR l-rpImp7 AS DECIMAL NO-UNDO.
+DEF VAR l-rpImp7 AS DECIMAL NO-UNDO.  
 
 /* ***************************  Main Block  *************************** */
 
@@ -227,7 +247,8 @@ PROCEDURE TransfPendAut:
             ttAut.Importe      = Cheque.Importe 
             ttAut.Aut          = Cheque.Negociable 
             ttAut.B            = l-Buzon
-            ttAut.CtaCheque    = Cheque.Id-CtaCheq .        
+            ttAut.CtaCheque    = Cheque.Id-CtaCheq
+            ttAut.Tipo         = Cheque.Tipo .          
           
         FOR EACH DetCheque OF Cheque NO-LOCK BY DetCheque.NumFac :
             RUN /usr2/adosa/procs/cxpd0045.p(INPUT DetCheque.Refer,
