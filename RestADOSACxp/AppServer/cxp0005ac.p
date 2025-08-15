@@ -6,7 +6,7 @@
     URI         : /OrdenDeCompraPorEntrada
     Syntax      : 
 
-    Description : Modulo CXP HU5
+    Description : Modulo CXP HU5.
 
     Author(s)   : sis10     
     Created     : 
