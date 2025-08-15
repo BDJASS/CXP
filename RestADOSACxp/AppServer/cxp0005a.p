@@ -72,8 +72,25 @@ DEFINE TEMP-TABLE ttAut NO-UNDO
     FIELD Aut          LIKE Cheque.Negociable     
     FIELD B            AS CHARACTER 
     FIELD CtaCheque    LIKE Cheque.Id-CtaCheq
+    FIELD Tipo         LIKE Cheque.Tipo
     INDEX idxFolio IS UNIQUE PRIMARY Folio.
 
+/* Tabla detalle */
+DEFINE TEMP-TABLE ttDet NO-UNDO
+    FIELD Folio       LIKE Cheque.NumCheque   
+    FIELD Factura     LIKE DetCheque.NumFac       
+    FIELD Buzon       AS CHAR    
+    FIELD FechaVenc   AS DATE 
+    FIELD ImpOriginal AS DECIMAL FORMAT "zzzzzz9"       
+    FIELD PP1         AS DECIMAL FORMAT ">9.99"
+    FIELD PP2         AS DECIMAL FORMAT ">9.99"
+    FIELD PP3         AS DECIMAL FORMAT ">9.99"
+    FIELD PP4         AS DECIMAL FORMAT ">9.99"
+    FIELD ImpPagado   AS DECIMAL FORMAT "zzzzzz9"
+    INDEX idxFolio IS PRIMARY Folio
+    INDEX idxDetalle Folio Factura.
+    
+    
 /* Tabla detalle */
 DEFINE TEMP-TABLE ttAutDet NO-UNDO
     FIELD Folio          LIKE Cheque.NumCheque
@@ -101,24 +118,31 @@ DEFINE TEMP-TABLE ttEntCompra NO-UNDO
     FIELD Importe         AS DECIMAL FORMAT "zz,zz9.999999"  .  
 
 DEFINE DATASET dsAut
-    FOR ttAut, ttAutDet, ttEntCompra
-    DATA-RELATION drAut FOR ttAut, ttAutDet
+    FOR ttAut, ttDet,ttAutDet, ttEntCompra
+    DATA-RELATION drAut FOR ttAut, ttDet
     RELATION-FIELDS(Folio, Folio)
-    NESTED
+    //NESTED
+    DATA-RELATION drAut2 FOR ttDet, ttAutDet
+    RELATION-FIELDS(Folio, Folio)
+    //NESTED  
     DATA-RELATION drDetEnt FOR ttAutDet, ttEntCompra
     RELATION-FIELDS(EntradaC, EntradaC)
-    NESTED.
+    NESTED.  
 
 
 
-DEF VAR l-rpFac  LIKE DetCheque.NumFac NO-UNDO.
-DEF VAR l-rpImp1 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
-DEF VAR l-rpImp2 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
-DEF VAR l-rpImp3 AS DECIMAL NO-UNDO.
-DEF VAR l-rpImp4 AS DECIMAL NO-UNDO.
-DEF VAR l-rpImp5 AS DECIMAL NO-UNDO.
-DEF VAR l-rpImp6 AS DECIMAL NO-UNDO.
-DEF VAR l-rpImp7 AS DECIMAL NO-UNDO.
+DEF    VAR      l-rpFac  LIKE DetCheque.NumFac NO-UNDO.
+DEF    VAR      l-rpImp1 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
+DEF    VAR      l-rpImp2 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
+DEF    VAR      l-rpImp3 AS DECIMAL NO-UNDO.
+DEF    VAR      l-rpImp4 AS DECIMAL NO-UNDO.
+DEF    VAR      l-rpImp5 AS DECIMAL NO-UNDO.
+DEF    VAR      l-rpImp6 AS DECIMAL NO-UNDO.
+DEF    VAR      l-rpImp7 AS DECIMAL NO-UNDO.  
+
+DEFINE VARIABLE l-Buzon2  AS CHAR    NO-UNDO.
+DEFINE VARIABLE l-rfc2    AS CHAR    NO-UNDO.
+DEFINE VARIABLE l-NumFac2 AS CHAR    NO-UNDO. 
 
 /* ***************************  Main Block  *************************** */
 
@@ -227,9 +251,45 @@ PROCEDURE TransfPendAut:
             ttAut.Importe      = Cheque.Importe 
             ttAut.Aut          = Cheque.Negociable 
             ttAut.B            = l-Buzon
-            ttAut.CtaCheque    = Cheque.Id-CtaCheq .        
+            ttAut.CtaCheque    = Cheque.Id-CtaCheq
+            ttAut.Tipo         = Cheque.Tipo .          
+         
+        
           
         FOR EACH DetCheque OF Cheque NO-LOCK BY DetCheque.NumFac :
+            
+            
+            l-Buzon2 = "".
+            FIND Prov WHERE PRov.Id-Prov = Cheque.Id-Prov NO-LOCK NO-ERROR. 
+            l-rfc2 = CAPS(TRIM(REPLACE(Prov.RFC,' ',''))).        
+            l-rfc2 = CAPS(TRIM(REPLACE(l-rfc,'-',''))).        
+            IF l-rfc2 = "" THEN l-rfc = "XEXX010101000".
+            FIND FP WHERE FP.Id-FP = DetCheque.Refer AND
+                FP.NumFac = DetCheque.NumFac
+                NO-LOCK NO-ERROR.  
+            
+            FIND FIRST eDocRecibo WHERE eDocRecibo.Receptor BEGINS l-rfc2 AND
+                TRIM(eDocRecibo.Serie) + TRIM(STRING(eDocRecibo.Folio)) = l-NumFac2
+                NO-LOCK NO-ERROR.
+            l-Buzon2 = IF NOT AVAILABLE eDocRecibo THEN 'N' ELSE ''.
+            
+
+            CREATE ttDet.    
+            ASSIGN
+            ttDet.Folio          = Cheque.NumCheque
+            ttDet.Factura        = DetCheque.NumFac
+            ttDet.FechaVenc      = FP.FechaVenc
+            ttDet.Buzon          = l-Buzon
+            ttDet.ImpOriginal    = DetCheque.Importe *
+                (IF Prov.Id-Moneda = 1 THEN 1 ELSE DetCheque.TC)
+            ttDet.PP1            = DetCheque.DctoPP11 
+            ttDet.PP2            = DetCheque.DctoPP12
+            ttDet.PP3            = DetCheque.DctoPP13  
+            ttDet.PP4            = DetCheque.DctoPP14 
+            ttDet.ImpPagado      = DetCheque.ImpPagado *
+                (IF Prov.Id-Moneda = 1 THEN 1 ELSE DetCheque.TC).  
+            
+            
             RUN /usr2/adosa/procs/cxpd0045.p(INPUT DetCheque.Refer,
                 OUTPUT l-rpfac,
                 OUTPUT l-rpimp1,
