@@ -344,7 +344,7 @@ PROCEDURE FormaDePago:
         ASSIGN 
             l-yess = TRUE.
     END.
-          
+            
 END PROCEDURE.
 
 PROCEDURE "cxpc0045.p":

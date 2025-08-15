@@ -31,4 +31,10 @@
   <prgs:resource consumes="application/json" name="_Proveedores" path="/Proveedores" produces="application/json">
     <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/proveedorescxp.pidl::com.progress.openedge.pdt.bpmbindings" name="proveedorescxp..GetProveedores" produces="application/json" verb="GET"/>
   </prgs:resource>
+  <prgs:resource consumes="application/json" name="_OrdenDeCompraPorEntrada" path="/OrdenDeCompraPorEntrada" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005ac.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005ac..OrdenDeCompraPorEntrada" produces="application/json" verb="GET">
+      <prgs:param name="OrdenDeCompra" type="QUERY"/>
+      <prgs:param name="IdUsuario" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
 </prgs:model>
