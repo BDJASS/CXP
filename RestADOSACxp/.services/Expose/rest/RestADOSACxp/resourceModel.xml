@@ -4,6 +4,10 @@
     <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005a..TransfPendAut" produces="application/json" verb="GET">
       <prgs:param name="IdUsuario" type="QUERY"/>
     </prgs:operation>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005a..DarAutorizacion" produces="application/json" verb="PUT"/>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005a..DeshacerAutorizacion" produces="application/json" verb="POST">
+      <prgs:param name="Confirmar" type="QUERY"/>
+    </prgs:operation>
   </prgs:resource>
   <prgs:resource consumes="application/json" name="_TiposCambio" path="/TiposCambio" produces="application/json">
     <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/tipocambio.pidl::com.progress.openedge.pdt.bpmbindings" name="tipocambio..GetTipoCambio" produces="application/json" verb="GET">
@@ -35,6 +39,26 @@
     <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005ac.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005ac..OrdenDeCompraPorEntrada" produces="application/json" verb="GET">
       <prgs:param name="OrdenDeCompra" type="QUERY"/>
       <prgs:param name="IdUsuario" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="_OrdenDeCompra" path="/OrdenDeCompra" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005ad.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005ad..OrdenDeCompra" produces="application/json" verb="GET">
+      <prgs:param name="OrdenDeCompra" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="_FormaDePago" path="/FormaDePago" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0005ab.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0005ab..FormaDePago" produces="application/json" verb="GET">
+      <prgs:param name="IdFormaPago" type="QUERY"/>
+      <prgs:param name="IdUsuario" type="QUERY"/>
+    </prgs:operation>
+  </prgs:resource>
+  <prgs:resource consumes="application/json" name="_AutorizacionGastos" path="/AutorizacionGastos" produces="application/json">
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0006a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0006a..GetTransferenciaGastos" produces="application/json" verb="GET">
+      <prgs:param name="IdUsuario" type="QUERY"/>
+    </prgs:operation>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0006a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0006a..DarAutorizacion" produces="application/json" verb="PUT"/>
+    <prgs:operation consumes="application/json" idls="RestADOSACxp/.services/AppServer/cxp0006a.pidl::com.progress.openedge.pdt.bpmbindings" name="cxp0006a..DeshacerAutorizacion" produces="application/json" verb="POST">
+      <prgs:param name="Confirmar" type="QUERY"/>
     </prgs:operation>
   </prgs:resource>
 </prgs:model>

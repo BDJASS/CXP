@@ -19,45 +19,53 @@ BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
-DEF            VAR      l-Benef     AS CHAR    NO-UNDO FORMAT 'x(50)'.
-DEF            VAR      l-BusBenef  AS CHAR    NO-UNDO FORMAT 'x(50)'.
-DEF            VAR      l-Usuario   LIKE Usuario.Id-User NO-UNDO.    
-DEF            VAR      l-TipoChe   LIKE Cheque.Tipo NO-UNDO.
-DEF NEW SHARED VAR      s-recid     AS RECID   NO-UNDO.   
-DEF NEW SHARED VAR      s-Banco     LIKE Cheque.Id-Banco NO-UNDO.
-DEF NEW SHARED VAR      s-CtaCheq   LIKE Cheque.Id-CtaCheq NO-UNDO.
-DEF NEW SHARED VAR      s-NumCheque LIKE Cheque.NumCheque NO-UNDO.
-DEFINE         VARIABLE l-fvenc     AS DATE    NO-UNDO.
-DEFINE         VARIABLE l-base      AS DATE    NO-UNDO.
-DEFINE         VARIABLE l-IndicaPP  AS CHAR    NO-UNDO.
-DEFINE         VARIABLE l-Buzon     AS CHAR    NO-UNDO.
-DEFINE         VARIABLE l-rfc       AS CHAR    NO-UNDO.
-DEFINE         VARIABLE l-NumFac    AS CHAR    NO-UNDO.
-DEF NEW SHARED VAR      l-Banamex   AS DECIMAL FORMAT "$zz,zzz,zz9.99" LABEL "Banamex" NO-UNDO.
-DEF NEW SHARED VAR      l-Santander AS DECIMAL FORMAT "$zz,zzz,zz9.99" LABEL "Santander" NO-UNDO.
+DEFINE            VARIABLE l-Benef     AS CHARACTER NO-UNDO FORMAT 'x(50)'.
+DEFINE            VARIABLE l-BusBenef  AS CHARACTER NO-UNDO FORMAT 'x(50)'.
+DEFINE            VARIABLE l-Usuario   LIKE Usuario.Id-User NO-UNDO.    
+DEFINE            VARIABLE l-TipoChe   LIKE Cheque.Tipo NO-UNDO.
+DEFINE NEW SHARED VARIABLE s-recid     AS RECID     NO-UNDO.   
+DEFINE NEW SHARED VARIABLE s-Banco     LIKE Cheque.Id-Banco NO-UNDO.
+DEFINE NEW SHARED VARIABLE s-CtaCheq   LIKE Cheque.Id-CtaCheq NO-UNDO.
+DEFINE NEW SHARED VARIABLE s-NumCheque LIKE Cheque.NumCheque NO-UNDO.
+DEFINE            VARIABLE l-fvenc     AS DATE      NO-UNDO.
+DEFINE            VARIABLE l-base      AS DATE      NO-UNDO.
+DEFINE            VARIABLE l-IndicaPP  AS CHARACTER NO-UNDO.
+DEFINE            VARIABLE l-Buzon     AS CHARACTER NO-UNDO.
+DEFINE            VARIABLE l-rfc       AS CHARACTER NO-UNDO.
+DEFINE            VARIABLE l-NumFac    AS CHARACTER NO-UNDO.
+DEFINE NEW SHARED VARIABLE l-Banamex   AS DECIMAL   FORMAT "$zz,zzz,zz9.99" LABEL "Banamex" NO-UNDO.
+DEFINE NEW SHARED VARIABLE l-Santander AS DECIMAL   FORMAT "$zz,zzz,zz9.99" LABEL "Santander" NO-UNDO.
 
-DEF            VAR      l-SegCambio AS LOGICAL NO-UNDO.
-DEF BUFFER b-Cheque FOR Cheque.
+DEFINE            VARIABLE l-SegCambio AS LOGICAL   NO-UNDO.
+DEFINE BUFFER b-Cheque FOR Cheque.
 
-DEF VAR l-totimp     AS DECI      FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-DifMult    AS DECI      FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-totec      AS DECI      FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-totdesc    AS DECI      FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-DesPP      AS DECI      FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-precunit   AS DECI      FORMAT "zz,zz9.999999" DECIMALS 10 NO-UNDO.
-DEF VAR l-DifUnit    AS DECI      FORMAT "zz,zz9.99" DECIMALS 10 NO-UNDO.
-DEF VAR l-simbolo    AS CHAR      NO-UNDO.
+DEFINE VARIABLE l-totimp     AS DECIMAL   FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-DifMult    AS DECIMAL   FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-totec      AS DECIMAL   FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-totdesc    AS DECIMAL   FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-DesPP      AS DECIMAL   FORMAT "z,zzz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-precunit   AS DECIMAL   FORMAT "zz,zz9.999999" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-DifUnit    AS DECIMAL   FORMAT "zz,zz9.99" DECIMALS 10 NO-UNDO.
+DEFINE VARIABLE l-simbolo    AS CHARACTER NO-UNDO.
 
-DEF VAR l-tipocambio AS DECI      DECIMALS 8 NO-UNDO.
-DEF VAR l-aste       AS CHAR      NO-UNDO.
-DEF VAR v-cancelado  AS LOGICAL   NO-UNDO.
-DEF VAR v-artnoenc   AS CHARACTER NO-UNDO.
-DEF VAR v-error      AS LOGICAL   INITIAL FALSE NO-UNDO.
+DEFINE VARIABLE l-tipocambio AS DECIMAL   DECIMALS 8 NO-UNDO.
+DEFINE VARIABLE l-aste       AS CHARACTER NO-UNDO.
+DEFINE VARIABLE v-cancelado  AS LOGICAL   NO-UNDO.
+DEFINE VARIABLE v-artnoenc   AS CHARACTER NO-UNDO.
+DEFINE VARIABLE v-error      AS LOGICAL   INITIAL FALSE NO-UNDO.
 
 
-DEF BUFFER b-artpres  FOR ArtPres.
-DEF BUFFER bf-artpres FOR artpres.
+DEFINE BUFFER b-artpres  FOR ArtPres.
+DEFINE BUFFER bf-artpres FOR artpres.
 
+DEFINE VARIABLE l-rep  AS CHARACTER NO-UNDO.
+DEFINE VARIABLE l-rep2 AS CHARACTER NO-UNDO.
+DEFINE VARIABLE l-rep3 AS CHARACTER NO-UNDO.
+DEFINE VARIABLE l-rep4 AS CHARACTER NO-UNDO.
+DEFINE VARIABLE i      AS INTEGER   NO-UNDO.  
+
+ 
+DEFINE BUFFER bf-cheque FOR Cheque.
 
 /* Tabla principal (cabecera) */
 DEFINE TEMP-TABLE ttAut NO-UNDO
@@ -79,16 +87,16 @@ DEFINE TEMP-TABLE ttAut NO-UNDO
 DEFINE TEMP-TABLE ttDet NO-UNDO
     FIELD Folio       LIKE Cheque.NumCheque   
     FIELD Factura     LIKE DetCheque.NumFac       
-    FIELD Buzon       AS CHAR    
+    FIELD Buzon       AS CHARACTER    
     FIELD FechaVenc   AS DATE 
-    FIELD ImpOriginal AS DECIMAL FORMAT "zzzzzz9"       
-    FIELD PP1         AS DECIMAL FORMAT ">9.99"
-    FIELD PP2         AS DECIMAL FORMAT ">9.99"
-    FIELD PP3         AS DECIMAL FORMAT ">9.99"
-    FIELD PP4         AS DECIMAL FORMAT ">9.99"
-    FIELD ImpPagado   AS DECIMAL FORMAT "zzzzzz9"
+    FIELD ImpOriginal AS DECIMAL   FORMAT "zzzzzz9"       
+    FIELD PP1         AS DECIMAL   FORMAT ">9.99"
+    FIELD PP2         AS DECIMAL   FORMAT ">9.99"
+    FIELD PP3         AS DECIMAL   FORMAT ">9.99"
+    FIELD PP4         AS DECIMAL   FORMAT ">9.99"
+    FIELD ImpPagado   AS DECIMAL   FORMAT "zzzzzz9"
     INDEX idxFolio IS PRIMARY Folio
-    INDEX idxDetalle Folio Factura.
+    INDEX idxDetalle          Folio Factura.
     
     
 /* Tabla detalle */
@@ -131,18 +139,18 @@ DEFINE DATASET dsAut
 
 
 
-DEF    VAR      l-rpFac  LIKE DetCheque.NumFac NO-UNDO.
-DEF    VAR      l-rpImp1 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
-DEF    VAR      l-rpImp2 AS DECIMAL FORMAT "zzzzz,zz9" NO-UNDO.
-DEF    VAR      l-rpImp3 AS DECIMAL NO-UNDO.
-DEF    VAR      l-rpImp4 AS DECIMAL NO-UNDO.
-DEF    VAR      l-rpImp5 AS DECIMAL NO-UNDO.
-DEF    VAR      l-rpImp6 AS DECIMAL NO-UNDO.
-DEF    VAR      l-rpImp7 AS DECIMAL NO-UNDO.  
+DEFINE VARIABLE l-rpFac   LIKE DetCheque.NumFac NO-UNDO.
+DEFINE VARIABLE l-rpImp1  AS DECIMAL   FORMAT "zzzzz,zz9" NO-UNDO.
+DEFINE VARIABLE l-rpImp2  AS DECIMAL   FORMAT "zzzzz,zz9" NO-UNDO.
+DEFINE VARIABLE l-rpImp3  AS DECIMAL   NO-UNDO.
+DEFINE VARIABLE l-rpImp4  AS DECIMAL   NO-UNDO.
+DEFINE VARIABLE l-rpImp5  AS DECIMAL   NO-UNDO.
+DEFINE VARIABLE l-rpImp6  AS DECIMAL   NO-UNDO.
+DEFINE VARIABLE l-rpImp7  AS DECIMAL   NO-UNDO.  
 
-DEFINE VARIABLE l-Buzon2  AS CHAR    NO-UNDO.
-DEFINE VARIABLE l-rfc2    AS CHAR    NO-UNDO.
-DEFINE VARIABLE l-NumFac2 AS CHAR    NO-UNDO. 
+DEFINE VARIABLE l-Buzon2  AS CHARACTER NO-UNDO.
+DEFINE VARIABLE l-rfc2    AS CHARACTER NO-UNDO.
+DEFINE VARIABLE l-NumFac2 AS CHARACTER NO-UNDO. 
 
 /* ***************************  Main Block  *************************** */
 
@@ -156,9 +164,9 @@ PROCEDURE TransfPendAut:
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
-    DEFINE INPUT PARAMETER  IdUsuario AS CHAR NO-UNDO.
+    DEFINE INPUT PARAMETER  IdUsuario AS CHARACTER NO-UNDO.
     DEFINE OUTPUT PARAMETER IdError    AS LOGICAL.
-    DEFINE OUTPUT PARAMETER Respuesta  AS CHAR. 
+    DEFINE OUTPUT PARAMETER Respuesta  AS CHARACTER. 
     DEFINE OUTPUT PARAMETER DATASET FOR dsAut.
 
     /* Inicia log */
@@ -276,17 +284,17 @@ PROCEDURE TransfPendAut:
 
             CREATE ttDet.    
             ASSIGN
-            ttDet.Folio          = Cheque.NumCheque
-            ttDet.Factura        = DetCheque.NumFac
-            ttDet.FechaVenc      = FP.FechaVenc
-            ttDet.Buzon          = l-Buzon
-            ttDet.ImpOriginal    = DetCheque.Importe *
+                ttDet.Folio       = Cheque.NumCheque
+                ttDet.Factura     = DetCheque.NumFac
+                ttDet.FechaVenc   = FP.FechaVenc
+                ttDet.Buzon       = l-Buzon
+                ttDet.ImpOriginal = DetCheque.Importe *
                 (IF Prov.Id-Moneda = 1 THEN 1 ELSE DetCheque.TC)
-            ttDet.PP1            = DetCheque.DctoPP11 
-            ttDet.PP2            = DetCheque.DctoPP12
-            ttDet.PP3            = DetCheque.DctoPP13  
-            ttDet.PP4            = DetCheque.DctoPP14 
-            ttDet.ImpPagado      = DetCheque.ImpPagado *
+                ttDet.PP1         = DetCheque.DctoPP11 
+                ttDet.PP2         = DetCheque.DctoPP12
+                ttDet.PP3         = DetCheque.DctoPP13  
+                ttDet.PP4         = DetCheque.DctoPP14 
+                ttDet.ImpPagado   = DetCheque.ImpPagado *
                 (IF Prov.Id-Moneda = 1 THEN 1 ELSE DetCheque.TC).  
             
             
@@ -340,7 +348,7 @@ PROCEDURE fecha_vence:
     FOR EACH DetCheque WHERE DetCheque.Id-Banco = Cheque.Id-Banco  
         AND DetCheque.Id-CtaCheq = Cheque.Id-CtaCheq 
         AND DetCheque.NumCheque = Cheque.NumCheque NO-LOCK,
-        EACH Fp WHERE Fp.Id-Fp = DetCheque.Refer AND Fp.NumFac = DetCheque.NumFac NO-LOCK BREAK BY Fp.FechaVenc DESC:
+        EACH Fp WHERE Fp.Id-Fp = DetCheque.Refer AND Fp.NumFac = DetCheque.NumFac NO-LOCK BREAK BY Fp.FechaVenc DESCENDING:
        
         IF l-fvenc = ? THEN l-fvenc = Fp.FechaVenc.
         IF Prov.Tipo <> 'E' THEN 
@@ -387,7 +395,7 @@ PROCEDURE entradaCompra:
     Created     : Wed Jul 30 11:35:10 CST 2025
     Notes       :
   ----------------------------------------------------------------------*/
-    DEF INPUT PARAMETER ip-ec   LIKE ec.id-ec  NO-UNDO.
+    DEFINE INPUT PARAMETER ip-ec   LIKE ec.id-ec  NO-UNDO.
     FOR EACH EC WHERE EC.Id-EC = ip-ec NO-LOCK :
 
         FIND FIRST ENTFP WHERE EntFP.Id-EC = EC.Id-EC 
@@ -624,4 +632,164 @@ PROCEDURE entradaCompra:
 
 
     END. /* del ec */
+END PROCEDURE.
+@openapi.openedge.export(type="REST", useReturnValue="false", writeDataSetBeforeImage="false").
+PROCEDURE DeshacerAutorizacion: 
+    DEFINE OUTPUT PARAMETER IdError    AS LOGICAL.
+    DEFINE OUTPUT PARAMETER Respuesta  AS CHARACTER. 
+    DEFINE INPUT PARAMETER iConfirmar  AS LOGICAL.
+    
+    IF iConfirmar = ? THEN iConfirmar = FALSE.
+    
+    LOG-MANAGER:WRITE-MESSAGE(" /AutorizacionDePagos >> Deshacer").
+    FIND FIRST Cheque WHERE Cheque.Estatus = 4
+        AND Cheque.Tipo = 1
+        AND Cheque.FecEst = TODAY
+        AND Cheque.NumCheque >= 200000
+        NO-LOCK NO-ERROR.
+    IF AVAILABLE Cheque THEN 
+    DO:
+        
+        IF iConfirmar = FALSE THEN 
+        DO:
+            
+            ASSIGN 
+                IdError   = TRUE
+                Respuesta = "Confirma en deshacer las Operaciones Autorizadas ?".
+            RETURN.  
+            
+        END.  
+        DO TRANSACTION:
+            FOR EACH Cheque WHERE Cheque.FecReg >= 01/01/2012 
+                AND Cheque.NumCheque >= 200000 
+                AND Cheque.Tipo = 1
+                AND Cheque.Estatus = 4
+                AND Cheque.Negociable = TRUE
+                AND Cheque.FecEst = TODAY
+                NO-LOCK:
+                FIND bf-Cheque WHERE RECID(bf-Cheque) = RECID(Cheque)
+                    EXCLUSIVE-LOCK NO-ERROR.
+                IF AVAILABLE bf-Cheque THEN 
+                DO:
+                    ASSIGN 
+                        bf-Cheque.Estatus    = 0
+                        bf-Cheque.FecEst     = ?
+                        bf-Cheque.Negociable = NO.
+                END.
+                RELEASE bf-Cheque.
+            END.
+        END.
+
+
+
+
+        DO i = 1 TO 20:
+    
+            l-rep = "/usr2/compartido/transfer/banamex" 
+                + SUBSTRING(STRING(YEAR(TODAY)), 3,2) 
+                + STRING(MONTH(TODAY), "99")
+                + STRING(DAY(TODAY), "99") 
+                + STRING(i, "99") + "p.txt".
+                                                             
+            l-rep2 = "/usr2/compartido/transfer/otrobanco" 
+                + SUBSTRING(STRING(YEAR(TODAY)), 3,2) 
+                + STRING(MONTH(TODAY), "99")
+                + STRING(DAY(TODAY), "99") 
+                + STRING(i, "99") + "p.txt".
+                                                               
+            l-rep3 = "/usr2/compartido/transfer/sant" 
+                + SUBSTRING(STRING(YEAR(TODAY)), 3,2) 
+                + STRING(MONTH(TODAY), "99")
+                + STRING(DAY(TODAY), "99") 
+                + STRING(i, "99") + "pd.txt".
+                                                             
+            l-rep4 = "/usr2/compartido/transfer/sant" 
+                + SUBSTRING(STRING(YEAR(TODAY)), 3,2) 
+                + STRING(MONTH(TODAY), "99")
+                + STRING(DAY(TODAY), "99") 
+                + STRING(i, "99") + "pi.txt".
+                                                                                                          
+
+            IF SEARCH(l-rep) <> ? THEN UNIX SILENT VALUE('rm ' + l-rep).
+            IF SEARCH(l-rep2) <> ? THEN UNIX SILENT VALUE('rm ' + l-rep2).
+            IF SEARCH(l-rep3) <> ? THEN UNIX SILENT VALUE('rm ' + l-rep3).
+            IF SEARCH(l-rep4) <> ? THEN UNIX SILENT VALUE('rm ' + l-rep4).
+
+        END.
+   
+        /* Proceso OK */
+        ASSIGN 
+            IdError   = FALSE
+            Respuesta = "Proceso ejecutado correctamente.".  
+    END.
+    ELSE 
+    DO: 
+        ASSIGN 
+            Respuesta = "No existen operaciones autorizadas de hoy".
+        IdError = TRUE.
+    END.      
+    
+    RETURN.    
+END PROCEDURE.
+@openapi.openedge.export(type="REST", useReturnValue="false", writeDataSetBeforeImage="false").
+PROCEDURE DarAutorizacion:
+    DEFINE INPUT  PARAMETER TABLE FOR ttAut.
+    DEFINE OUTPUT PARAMETER IdError   AS LOGICAL NO-UNDO.
+    DEFINE OUTPUT PARAMETER Respuesta AS CHARACTER NO-UNDO.
+    
+    
+    LOG-MANAGER:WRITE-MESSAGE(" /AutorizacionDePagos >> Autorizar").
+    /* Validar que existan registros */
+    IF NOT CAN-FIND(FIRST ttAut) THEN 
+    DO:
+        ASSIGN 
+            IdError   = TRUE
+            Respuesta = "No se recibieron datos en ttAut.".
+        RETURN.
+    END.    
+    DO TRANSACTION:
+      
+
+        /* Validar que los 3 campos obligatorios existan en cada registro */
+        FOR EACH ttAut:
+            IF ttAut.Folio   = 0 
+                OR ttAut.FecReg  = ? 
+                OR ttAut.Importe = 0 THEN 
+            DO:
+                ASSIGN 
+                    IdError   = TRUE
+                    Respuesta = "Campos obligatorios faltantes: Folio, FecReg o Importe.".
+                RETURN.
+            END.
+        END.
+
+        /* Si pasa las validaciones, ejecutar lógica normal */
+        FOR EACH ttAut:
+            FOR EACH Cheque WHERE Cheque.FecReg     = ttAut.FecReg  
+                AND Cheque.NumCheque  = ttAut.Folio
+                AND Cheque.Tipo       = 1
+                AND Cheque.Estatus    = 0
+                AND Cheque.Negociable = FALSE
+                AND Cheque.Importe    = ttAut.Importe
+                NO-LOCK:
+                FIND bf-Cheque WHERE RECID(bf-Cheque) = RECID(Cheque)
+                    EXCLUSIVE-LOCK NO-ERROR.
+                IF AVAILABLE bf-Cheque THEN 
+                DO:
+                    ASSIGN 
+                        bf-Cheque.Estatus    = 4
+                        bf-Cheque.FecEst     = TODAY
+                        bf-Cheque.Negociable = TRUE.  
+                END.
+                RELEASE bf-Cheque.
+            END.
+        END.
+
+        /* Proceso OK */
+        ASSIGN 
+            IdError   = FALSE
+            Respuesta = "Autorización ejecutada correctamente.".
+    END.
+
+    RETURN.       
 END PROCEDURE.
